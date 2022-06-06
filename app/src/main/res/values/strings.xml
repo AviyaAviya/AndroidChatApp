@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Chat</string>
+    <string name="logInName">Name</string>
+    <string name="logInPassword">Password</string>
+    <string name="enterButton">Login</string>
+    <string name="logoName">ChitChat</string>
+    <string name="logoImage">logoHeart</string>
+    <string name="go_to_registerButton">Register</string>
+    <string name="home_page_title">Home Page</string>
+    <string name="create_accountButton">create account</string>
+    <string name="display_name_field">display name</string>
+    <string name="repeat_password_field">repeat Password</string>
+
+
+</resources>
