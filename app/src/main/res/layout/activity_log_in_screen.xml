@@ -8,23 +8,27 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:layout_width="419dp"
-        android:layout_height="190dp"
+        android:layout_width="188dp"
+        android:layout_height="78dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
         <Button
             android:id="@+id/buttonSubmitReg"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+
+            android:backgroundTint="@color/teal_700"
             android:text="@string/create_accountButton" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="407dp"
-        android:layout_height="347dp"
+        android:id="@+id/linearLayout2"
+        android:layout_width="392dp"
+        android:layout_height="431dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,43 +36,69 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
-            android:layout_margin="5dp"
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/userName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:ems="10"
+            android:hint="@string/logInName"
             android:inputType="textPersonName"
-            android:hint="@string/logInName" />
+            android:textColorHint="@color/material_on_background_emphasis_high_type"
+            android:typeface="monospace" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName3"
+            android:id="@+id/fullName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
             android:layout_margin="5dp"
+            android:ems="10"
+            android:hint="@string/full_name_field"
             android:inputType="textPersonName"
-            android:hint="@string/display_nameText" />
+            android:textColorHint="@color/material_on_background_emphasis_high_type"
+            android:typeface="monospace" />
 
         <EditText
-            android:id="@+id/editTextTextPassword"
+            android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:ems="10"
-            android:hint="@string/logInPassword" />
+            android:hint="@string/logInPassword"
+            android:textColorHint="@color/material_on_background_emphasis_high_type"
+            android:typeface="monospace" />
 
         <EditText
-            android:id="@+id/editTextTextPassword3"
+            android:id="@+id/ensurePassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
             android:layout_margin="5dp"
-            android:hint="@string/repite_password" />
+            android:ems="10"
+            android:hint="@string/repeat_password_field"
+            android:textColorHint="@color/material_on_background_emphasis_high_type"
+            android:typeface="monospace" />
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:srcCompat="@tools:sample/avatars" />
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            app:srcCompat="@drawable/babyboss" />
     </LinearLayout>
+
+    <EditText
+        android:id="@+id/editTextTextMultiLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        android:text="@string/register_area_title"
+        android:textAlignment="center"
+        android:textColor="@color/teal_700"
+        android:textSize="24sp"
+        android:typeface="monospace"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
