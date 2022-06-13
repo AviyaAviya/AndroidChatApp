@@ -34,6 +34,8 @@
     <string name="btnSave">save</string>
     <string name="title_of_chat">nickName,did you get my text??</string>
     <string name="send_message">send</string>
+    <string name="new_message">new message</string>
+    <string name="name_of_contact">Name</string>
 
 
 </resources>

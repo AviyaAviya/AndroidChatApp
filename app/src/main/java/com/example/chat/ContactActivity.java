@@ -3,6 +3,7 @@ package com.example.chat;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 //this is the contacts screen, all your friends are showed here by list
-public class ContactActivity extends AppCompatActivity {
+public class ContactActivity extends AppCompatActivity implements ContactsListAdapter.ListenerOnClick {
 
     //the data base
     private AppDB db;
@@ -23,9 +24,8 @@ public class ContactActivity extends AppCompatActivity {
     private ContactDao contactDao;
     //the contact data
     private List<Contact> contacts;
-    //   private PostsListAdapter adapter;
-    //to adapt the list view
-    // private ArrayAdapter<Post> adapter;
+     private  ContactsListAdapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,65 +39,44 @@ public class ContactActivity extends AppCompatActivity {
         FloatingActionButton btnAdd = findViewById(R.id.btnAdd);
         //when click on btn, go to page adding new contact
         btnAdd.setOnClickListener(v -> {
-            Intent i = new Intent(this, FormActivity.class);
+            Intent i = new Intent(this, addContactActivity.class);
             startActivity(i);
         });
         RecyclerView lstContacts = findViewById(R.id.lstContacts);
 
         contacts = new ArrayList<>();
-        contacts.add(new Contact("hello", R.drawable.person_ic));
+        contacts.add(new Contact("example for contact", R.drawable.person_ic));
 
-        final ContactsListAdapter adapter = new ContactsListAdapter(this);
+        adapter = new ContactsListAdapter(this);
         //list of contacts
         lstContacts.setAdapter(adapter);
         lstContacts.setLayoutManager(new LinearLayoutManager(this));
         //posts.add(new Post("hello",R.drawable.person_ic));
         adapter.setContacts(contacts);
+//        contacts.clear();
+//        contacts.addAll(contactDao.index());
+//        adapter.notifyDataSetChanged();
 
-//when click long in btn, remove contact from list
-        //TODO add method of remove in adapter(the content string and the pic
-//        lstPosts.addOnItemTouchListener((adapterView, v, i, l) -> {
-//            Post post = posts.remove(i);
-//            //remove it from the db too
-//            postDao.delete(post);
-//            //notify the adapter on changes
-//            adapter.notifyDataSetChanged();
-//            return true;
-//        });
-
-        //on short click , go to page of adding new contact but with extra info as the post(contact)
-        //we want to edit
-//        lstPosts.setOnItemClickListener((adapterView, v, i, l) -> {
-//            Intent intent = new Intent(this, FormActivity.class);
-//            //sending the id of the needed update contact
-//            intent.putExtra("id", posts.get(i).getId());
-//            startActivity(intent);
-//
-//        });
-
-        //on short click , go to chat
-//                lstPosts.addOnItemTouchListener((adapterView, v, i, l) -> {
-//            Post post = posts.remove(i);
-//                    Intent intent = new Intent(this, ChatActivity.class);
-//                    startActivity(intent);
-//                    //remove it from the db too
-//                    postDao.delete(post);
-//                    //notify the adapter on changes
-//                    adapter.notifyDataSetChanged();
-//                    return true;
-//                });
 
     }
+    //on short click , go to chat
 
-    // @Override
+    @Override
+    public void onItemClick(View v, int position) {
+        Contact contact = contacts.get(position);
+        Intent i = new Intent(this, ChatActivity.class);
+        //so we would know which chat history to get
+        i.putExtra("contactID", contact.getId());
+        startActivity(i);
+    }
+
+    @Override
     //make the changes seen in run time
-//    protected void onResume() {
-//        super.onResume();
-//        posts.clear();
-//        posts.addAll(postDao.index());
-//        adapter.notifyDataSetChanged();
-//        Log.i("Contacts", "onResume");
-//    }
+    protected void onResume() {
+        super.onResume();
+
+        Log.i("Contacts", "onResume");
+    }
 
 
     @Override
@@ -130,4 +109,6 @@ public class ContactActivity extends AppCompatActivity {
         super.onDestroy();
         Log.i("Contacts", "onDestroy");
     }
+
+
 }

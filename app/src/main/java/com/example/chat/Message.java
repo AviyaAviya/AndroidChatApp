@@ -25,8 +25,8 @@ public class Message {
         this.content = content;
     }
 
-    public Message(int id, String content) {
-        this.id = id;
+    public Message( String content) {
+
         this.content = content;
     }
 

@@ -22,12 +22,12 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ListView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/lvMessages"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="235dp">
 
-            </ListView>
+            </androidx.recyclerview.widget.RecyclerView>
 
 
         </LinearLayout>
@@ -63,7 +63,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="new message"
+        android:hint="@string/new_message"
         app:boxCornerRadiusBottomEnd="5dp"
         app:boxCornerRadiusBottomStart="5dp"
         app:boxCornerRadiusTopEnd="5dp"
