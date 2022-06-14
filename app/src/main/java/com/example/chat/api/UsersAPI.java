@@ -1,8 +1,9 @@
 package com.example.chat.api;
 
+import com.example.chat.activity.MyApplication;
 import com.example.chat.activity.R;
 import com.example.chat.entitys.Contact;
-import com.example.chat.activity.MyApplication;
+import com.example.chat.entitys.User;
 
 import java.util.List;
 
@@ -12,30 +13,32 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ContactAPI {
+public class UsersAPI {
     //    private MutableLiveData<List<Contact>> postListData;
     Retrofit retrofit;
-    WebServiceAPI webServiceAPI;
+    IUsersAPI webServiceAPI;
 
-    public ContactAPI() {
+    public UsersAPI() {
         retrofit = new Retrofit.Builder()
                 .baseUrl(MyApplication.context.getString(R.string.BaseUrl))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        webServiceAPI = retrofit.create(WebServiceAPI.class);
+        webServiceAPI = retrofit.create(IUsersAPI.class);
     }
 
     public void get() {
-        Call<List<Contact>> call = webServiceAPI.getContacts();
-        call.enqueue(new Callback<List<Contact>>() {
+        Call<List<User>> call = webServiceAPI.getUsers();
+        call.enqueue(new Callback<List<User>>() {
             @Override
-            public void onResponse(Call<List<Contact>> call, Response<List<Contact>> response) {
-                List<Contact> contacts = response.body();
-                int a =5;
+            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                List<User> users = response.body();
             }
 
             @Override
-            public void onFailure(Call<List<Contact>> call, Throwable t) {}
+            public void onFailure(Call<List<User>> call, Throwable t) {}
         });
     }
+
+
+
 }

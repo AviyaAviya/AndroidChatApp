@@ -14,7 +14,8 @@ import androidx.room.Room;
 
 //import com.example.chat.R;
 import com.example.chat.adapter.ContactsListAdapter;
-import com.example.chat.api.ContactAPI;
+import com.example.chat.api.ContactsAPI;
+import com.example.chat.api.UsersAPI;
 import com.example.chat.entitys.Contact;
 import com.example.chat.room.AppDB;
 import com.example.chat.room.ContactDao;
@@ -42,8 +43,10 @@ public class ContactActivity extends AppCompatActivity implements ContactsListAd
         setThemeOfApp();
         setContentView(R.layout.activity_contacts);
 
-        ContactAPI api = new ContactAPI();
+        ContactsAPI api = new ContactsAPI();
         api.get();
+        UsersAPI api1 = new UsersAPI();
+        api1.get();
 
 //building db
         db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ContactsDB").allowMainThreadQueries().build();

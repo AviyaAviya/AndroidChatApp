@@ -1,7 +1,7 @@
-
 package com.example.chat.api;
 
 import com.example.chat.entitys.Contact;
+import com.example.chat.entitys.User;
 
 import java.util.List;
 
@@ -12,13 +12,13 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
-public interface WebServiceAPI {
-    @GET("contacts")
-    Call<List<Contact>> getContacts();
+public interface IUsersAPI {
+    @GET("users")
+    Call<List<User>> getUsers();
 
-    @POST("contacts")
-    Call<Void> createContact(@Body Contact contact);
+    @POST("users")
+    Call<Void> createUser(@Body User user);
 
-    @DELETE("contacts/{id}")
-    Call<Void> deleteContact(@Path("id") int id);
+    @DELETE("users/{id}")
+    Call<Void> deleteUser(@Path("id") int id);
 }
