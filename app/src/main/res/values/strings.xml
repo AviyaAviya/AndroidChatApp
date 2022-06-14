@@ -36,6 +36,8 @@
     <string name="send_message">send</string>
     <string name="new_message">new message</string>
     <string name="name_of_contact">Name</string>
+    <string name="title_theme_preferences">choose your favorite theme</string>
+    <string name="suprise">suprise! click on it...</string>
 
 
 </resources>

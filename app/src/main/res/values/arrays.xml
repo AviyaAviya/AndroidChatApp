@@ -1,0 +1,12 @@
+<resources>
+    <!-- Reply Preference -->
+    <string-array name="theme_entries">
+        <item>TEAL THEME</item>
+        <item>TURQUIZ THEME</item>
+    </string-array>
+
+    <string-array name="theme_values">
+        <item>TEAL</item>
+        <item>TURQUIZ</item>
+    </string-array>
+</resources>
