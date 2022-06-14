@@ -38,6 +38,7 @@
     <string name="name_of_contact">Name</string>
     <string name="title_theme_preferences">choose your favorite theme</string>
     <string name="suprise">suprise! click on it...</string>
+    <string name="BaseUrl">http://10.0.2.2:5285/api/</string>
 
 
 </resources>

@@ -12,7 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+//import com.example.chat.R;
 import com.example.chat.adapter.ContactsListAdapter;
+import com.example.chat.api.ContactAPI;
 import com.example.chat.entitys.Contact;
 import com.example.chat.room.AppDB;
 import com.example.chat.room.ContactDao;
@@ -20,6 +22,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 //this is the contacts screen, all your friends are showed here by list
 public class ContactActivity extends AppCompatActivity implements ContactsListAdapter.ListenerOnClick {
@@ -38,6 +41,10 @@ public class ContactActivity extends AppCompatActivity implements ContactsListAd
         super.onCreate(savedInstanceState);
         setThemeOfApp();
         setContentView(R.layout.activity_contacts);
+
+        ContactAPI api = new ContactAPI();
+        api.get();
+
 //building db
         db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ContactsDB").allowMainThreadQueries().build();
 
