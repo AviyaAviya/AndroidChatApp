@@ -6,12 +6,23 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
+import com.example.chat.api.UsersAPI;
+import com.example.chat.entitys.Login;
+import com.example.chat.entitys.User;
+
 public class LogInActivity extends AppCompatActivity {
+    //color of app
     SharedPreferences sharedPreferences;
+    //for the DB
+
+    Login user;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,9 +31,33 @@ public class LogInActivity extends AppCompatActivity {
         //the button of the log in
         Button btnLogin = findViewById(R.id.buttonLogIn);
         btnLogin.setOnClickListener(v -> {
+
+
+
+            //taking input
+            TextView usernameTV = findViewById(R.id.userNameLogIn);
+            TextView passwordTV = findViewById(R.id.passwordLogIn);
             //moving to screen contacts list
             Intent i = new Intent(this, ContactActivity.class);
-            startActivity(i);
+            //TODO CHECK IF USER EXIST IN DB
+            if(true){
+                //TODO CHECK IF PASSWORD CORRECT
+                if(true){
+                    user = new Login(usernameTV.getText().toString(),passwordTV.getText().toString());
+                    UsersAPI userApi1 = new UsersAPI();
+                    userApi1.sighin(user,this);
+
+                }
+                else{
+                    passwordTV.setError("nop,that's not it");
+                }
+
+
+            }
+            else{
+                usernameTV.setError("are you invisible? we cant see you in our app ");
+            }
+
         });
         //to the log cat print where am i
         Log.i("MainActivity", "onCreate");
@@ -44,6 +79,7 @@ public class LogInActivity extends AppCompatActivity {
 
 
     }
+
     private void setThemeOfApp(){
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         if(sharedPreferences.getString("color","TEAL").equals("TEAL")){

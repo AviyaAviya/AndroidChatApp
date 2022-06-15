@@ -5,7 +5,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,95 +16,129 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
 public class ResignActivity extends AppCompatActivity {
+    //for color of app
     SharedPreferences sharedPreferences;
+    //to send for DB
+    private String fullName;
+    private String nickName;
+    private String password;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //set color of app
         setThemeOfApp();
         setContentView(R.layout.activity_resign);
+        //fitcher
         Button btn = findViewById(R.id.buttonSurpise);
-        btn.setOnClickListener(v -> { Toast toast = Toast.makeText(getApplicationContext(),
-                "There is nothing here so it is a surprise",
-                Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.CENTER,0,0);
-            toast.show();
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showToast();
+            }
         });
-        Button btnSubmit = findViewById(R.id.buttonSubmitReg);
-        if (registerUser()) {
-            btnSubmit.setOnClickListener(v -> {
-                //moving to screen contacts list
-                Intent i = new Intent(this, ContactActivity.class);
-                startActivity(i);
-            });
-            Log.i("LogInScreen", "onCreate");
 
-        }
+//        btn.setOnClickListener(v -> {
+//            Toast toast = Toast.makeText(getApplicationContext(),
+//                    "There is nothing here so it is a surprise",
+//                    Toast.LENGTH_SHORT);
+//            toast.setGravity(Gravity.CENTER, 0, 0);
+//            toast.show();
+//        });
+        Button btnSubmit = findViewById(R.id.buttonSubmitReg);
+
+        btnSubmit.setOnClickListener(v -> {
+            if (registerUser()) {
+//TODO MAKE FUNC THAT TAKES THE INPUT AND SEND TO DB TO CREATE A USER
+                //moving to screen contacts list
+                Intent i = new Intent(this, LogInActivity.class);
+                startActivity(i);
+            }
+        });
+        Log.i("LogInScreen", "onCreate");
+
 
     }
+    void showToast() {
+        Toast toast = new Toast(this);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        if (sharedPreferences.getBoolean("surpise_visibilty",true)) {
+            toast.setDuration(Toast.LENGTH_SHORT);
+            View toastView = getLayoutInflater().inflate(R.layout.costum_toast, (ViewGroup) findViewById(R.id.toastLayout));
+            toast.setView(toastView);
+            toast.setGravity(Gravity.CENTER | Gravity.FILL_HORIZONTAL, 0, 0);
+            toast.show();
+        }
+    }
+
 
     private boolean validateFullName() {
-        TextView fullName = findViewById(R.id.fullName);
-        String val = fullName.toString();
-        if (val.isEmpty()) {
-            fullName.setError("Sorry buddy, it cannot be empty");
+        TextView fullNameTV = findViewById(R.id.fullName);
+        //String val = fullName.toString();
+        if (fullNameTV.length() == 0) {
+            fullNameTV.setError("Sorry buddy, it cannot be empty");
             return false;
         } else {
-            fullName.setError(null);
+            //fullName.setError(null);
             //userName.setErrorEnabled(false):
+            fullName = fullNameTV.getText().toString();
             return true;
         }
 
     }
 
     private boolean validateNickName() {
-        TextView nickName = findViewById(R.id.userName);
-        String val = nickName.toString();
-        if (val.isEmpty()) {
-            nickName.setError("Sorry buddy, it cannot be empty");
+        TextView nickNameTV = findViewById(R.id.userName);
+        //String val = nickName.toString();
+        if (nickNameTV.length() == 0) {
+            nickNameTV.setError("Sorry buddy, it cannot be empty");
             return false;
         } else {
-            nickName.setError(null);
+            nickName = nickNameTV.getText().toString();
             return true;
         }
 
     }
 
     private boolean validatePassword() {
-        TextView password = findViewById(R.id.password);
-        String val = password.toString();
+        TextView passwordTV = findViewById(R.id.password);
+        //String val = password.toString();
         String passwordVal = "^" +
                 "(?=.*[0-9])" +         //at least 1 digit
-                "(?=.*[a-zA-Z])" +
+                //   "(?=.*[a-zA-Z])" +
                 //   +"/^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d@$!%*#?&^_-]+$/"+//no special characters
                 "(?=\\S+$)" +           //no white spaces
                 ".{1,}" +               //at least 1 characters
                 "$";
-        if (val.isEmpty()) {
-            password.setError("Ooops, its empty");
+        if (passwordTV.length() == 0) {
+            passwordTV.setError("Ooops, its empty");
             return false;
-        } else if (!val.matches(passwordVal)) {
-            password.setError("Your password does not gonna make it! try again");
+        }
+        else if (!passwordTV.getText().toString().matches(passwordVal)) {
+            passwordTV.setError("Your password does not gonna make it! try again");
             return false;
-        } else {
-            password.setError(null);
+        }
+        else {
+            password = passwordTV.getText().toString();
             return true;
         }
 
     }
 
     private boolean validateEnsurePa() {
-        TextView ensurePassword = findViewById(R.id.ensurePassword);
-        String val = ensurePassword.toString();
-        TextView password = findViewById(R.id.password);
-        String val2 = password.toString();
-        if (val.isEmpty()) {
+        EditText ensurePassword = findViewById(R.id.ensurePassword);
+        //String val = ensurePassword.toString();
+        EditText password = findViewById(R.id.password);
+        //String val2 = password.toString();
+        if (ensurePassword.length() == 0) {
             ensurePassword.setError("Sorry buddy, it cannot be empty");
             return false;
-        } else if (val != val2) {
+        }
+        else if (!ensurePassword.getText().toString().equals(password.getText().toString())) {
             ensurePassword.setError("Hmmmm, its seems they are not a perfect match");
             return false;
         } else {
-            ensurePassword.setError(null);
+            //ensurePassword.setError(null);
             return true;
         }
 
@@ -116,12 +153,12 @@ public class ResignActivity extends AppCompatActivity {
 
 
     }
-    private void setThemeOfApp(){
+
+    private void setThemeOfApp() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        if(sharedPreferences.getString("color","TEAL").equals("TEAL")){
+        if (sharedPreferences.getString("color", "TEAL").equals("TEAL")) {
             setTheme(R.style.teal);
-        }
-        else {
+        } else {
             setTheme(R.style.turqiz);
         }
     }

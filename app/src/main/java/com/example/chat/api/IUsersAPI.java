@@ -2,6 +2,8 @@ package com.example.chat.api;
 
 import com.example.chat.entitys.Contact;
 import com.example.chat.entitys.User;
+import com.example.chat.entitys.Login;
+
 
 import java.util.List;
 
@@ -18,6 +20,10 @@ public interface IUsersAPI {
 
     @POST("users")
     Call<Void> createUser(@Body User user);
+
+    @POST("users/signin")
+    Call<Object> signin(@Body Login login);
+
 
     @DELETE("users/{id}")
     Call<Void> deleteUser(@Path("id") int id);

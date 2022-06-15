@@ -7,16 +7,12 @@ import androidx.room.PrimaryKey;
 public class User {
 
     @PrimaryKey
-    public int Id ;
-
     private String UserName ;
     private String NickName;
     private String Password ;
     private String Server ;
 
-    public void setId(int id) {
-        Id = id;
-    }
+
 
     public void setUserName(String userName) {
         UserName = userName;
@@ -34,9 +30,6 @@ public class User {
         Server = server;
     }
 
-    public int getId() {
-        return Id;
-    }
 
     public String getUserName() {
         return UserName;
@@ -54,8 +47,8 @@ public class User {
         return Server;
     }
 
-    public User(int id, String userName, String nickName, String password, String server) {
-        Id = id;
+    public User( String userName, String nickName, String password, String server) {
+
         UserName = userName;
         NickName = nickName;
         Password = password;

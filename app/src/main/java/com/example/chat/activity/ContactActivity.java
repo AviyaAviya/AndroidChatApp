@@ -1,5 +1,6 @@
 package com.example.chat.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,7 +16,6 @@ import androidx.room.Room;
 //import com.example.chat.R;
 import com.example.chat.adapter.ContactsListAdapter;
 import com.example.chat.api.ContactsAPI;
-import com.example.chat.api.UsersAPI;
 import com.example.chat.entitys.Contact;
 import com.example.chat.room.AppDB;
 import com.example.chat.room.ContactDao;
@@ -37,16 +37,32 @@ public class ContactActivity extends AppCompatActivity implements ContactsListAd
     private ContactsListAdapter adapter;
 
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setThemeOfApp();
         setContentView(R.layout.activity_contacts);
 
+
+
+        //any time we want the token
+        SharedPreferences prefs;
+        SharedPreferences.Editor edit;
+        prefs=this.getSharedPreferences("myPrefs",Context.MODE_PRIVATE);
+        String token = prefs.getString("token","");
+        //
+
         ContactsAPI api = new ContactsAPI();
-        api.get();
-        UsersAPI api1 = new UsersAPI();
-        api1.get();
+        api.getContact(token);
+        api.CreateContact(token,new Contact());
+
+//        SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+//        editor.putString("name", "Elena");
+//        editor.putInt("idName", 12);
+//        editor.apply();
 
 //building db
         db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ContactsDB").allowMainThreadQueries().build();
