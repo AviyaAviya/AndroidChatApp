@@ -5,51 +5,32 @@ import androidx.room.PrimaryKey;
 
 import com.example.chat.activity.R;
 
+import java.time.format.DateTimeFormatter;
+
 //contact
 @Entity
 public class Contact {
-    //the key is from 0....
+
     @PrimaryKey(autoGenerate = true)
-    //key
-    private int id;
-    // the name of contact
-    private String content;
-    //the pic of the contact
-    private int pic;
+    public int Id;
+
+    //user name of contact
+    public String ContactName;
+    //user name belong to
+    public  String UserName;
+    //nickname
+    public String NickName;
+    public String Server;
+
+    //last message
+    //can be null
+    public String Last;
+    //can be null
+
+    public DateTimeFormatter LastDate;
 
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public int getPic() {
-        return pic;
-    }
-
-    public void setPic(int pic) {
-        this.pic = pic;
-    }
-
-    public Contact(String content, int pic) {
-        this.content = content;
-        this.pic = pic;
-    }
-
-    public Contact() {
-        this.pic = R.drawable.person_ic;
-    }
 
 
 }
