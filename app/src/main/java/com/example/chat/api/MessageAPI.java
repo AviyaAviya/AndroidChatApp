@@ -32,7 +32,7 @@ public class MessageAPI {
             @Override
             public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
                 List<Message> messages = response.body();
-                int a = 1;
+
             }
 
             @Override
