@@ -1,6 +1,5 @@
 package com.example.chat.api;
 
-import com.example.chat.entitys.Contact;
 import com.example.chat.entitys.User;
 import com.example.chat.entitys.Login;
 

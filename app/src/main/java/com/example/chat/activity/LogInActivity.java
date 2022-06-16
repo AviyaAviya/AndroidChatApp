@@ -20,7 +20,7 @@ public class LogInActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     //for the DB
 
-    Login user;
+    Login login;
 
 
     @Override
@@ -38,25 +38,26 @@ public class LogInActivity extends AppCompatActivity {
             TextView usernameTV = findViewById(R.id.userNameLogIn);
             TextView passwordTV = findViewById(R.id.passwordLogIn);
             //moving to screen contacts list
-            Intent i = new Intent(this, ContactActivity.class);
-            //TODO CHECK IF USER EXIST IN DB
-            if(true){
-                //TODO CHECK IF PASSWORD CORRECT
-                if(true){
-                    user = new Login(usernameTV.getText().toString(),passwordTV.getText().toString());
+//            //TODO CHECK IF USER EXIST IN DB
+//            if(true){
+//                //TODO CHECK IF PASSWORD CORRECT
+//                if(true){
+                    //need to save user
+                    login = new Login(usernameTV.getText().toString(),passwordTV.getText().toString());
                     UsersAPI userApi1 = new UsersAPI();
-                    userApi1.sighin(user,this);
 
-                }
-                else{
-                    passwordTV.setError("nop,that's not it");
-                }
+                    userApi1.sighin(login,this);
 
-
-            }
-            else{
-                usernameTV.setError("are you invisible? we cant see you in our app ");
-            }
+//                }
+//                else{
+//                    passwordTV.setError("nop,that's not it");
+//                }
+//
+//
+//            }
+//            else{
+//                usernameTV.setError("are you invisible? we cant see you in our app ");
+//            }
 
         });
         //to the log cat print where am i

@@ -48,7 +48,7 @@ public class MessagesListAdapter extends RecyclerView.Adapter<MessagesListAdapte
     public void onBindViewHolder(MessagesListAdapter.MessageViewHolder holder, int position) {
         if (messages != null) {
             final Message current = messages.get(position);
-            holder.tvMessage.setText(current.getContent());
+//            holder.tvMessage.setText(current.getContent());
         }
     }
 

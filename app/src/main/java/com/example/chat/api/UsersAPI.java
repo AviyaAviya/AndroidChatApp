@@ -4,17 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.example.chat.activity.ContactActivity;
 import com.example.chat.activity.MyApplication;
 import com.example.chat.activity.R;
-import com.example.chat.entitys.Contact;
 import com.example.chat.entitys.Login;
 import com.example.chat.entitys.User;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.List;
 
@@ -79,10 +74,19 @@ public class UsersAPI {
                     String saveToken=s;
 
                     edit.putString("token",saveToken);
-                    Log.i("Login",saveToken);
                     edit.commit();
 
                     Intent i = new Intent(activity, ContactActivity.class);
+
+
+                    prefs=activity.getSharedPreferences("myPrefs2",Context.MODE_PRIVATE);
+                    edit=prefs.edit();
+                    edit.putString("userName", login.getUserId());
+                    edit.commit();
+
+//                    you need to put exstra this => login.getUserId();
+//                    String keyIdentifer  = null;
+//                    i.putExtra(userName, keyIdentifer );
                     activity.startActivity(i);
 
                 }

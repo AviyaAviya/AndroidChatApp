@@ -7,52 +7,53 @@ import androidx.room.PrimaryKey;
 public class User {
 
     @PrimaryKey
-    private String UserName ;
-    private String NickName;
-    private String Password ;
-    private String Server ;
+    public int id;
+    public String userName;
+    public String nickName;
+    public String password;
+    public String server;
 
 
 
     public void setUserName(String userName) {
-        UserName = userName;
+        this.userName = userName;
     }
 
     public void setNickName(String nickName) {
-        NickName = nickName;
+        this.nickName = nickName;
     }
 
     public void setPassword(String password) {
-        Password = password;
+        this.password = password;
     }
 
     public void setServer(String server) {
-        Server = server;
+        this.server = server;
     }
 
 
     public String getUserName() {
-        return UserName;
+        return userName;
     }
 
     public String getNickName() {
-        return NickName;
+        return nickName;
     }
 
     public String getPassword() {
-        return Password;
+        return password;
     }
 
     public String getServer() {
-        return Server;
+        return server;
     }
 
-    public User( String userName, String nickName, String password, String server) {
-
-        UserName = userName;
-        NickName = nickName;
-        Password = password;
-        Server = server;
+    public User(int id, String userName, String nickName, String password, String server) {
+        this.id = id;
+        this.userName = userName;
+        this.nickName = nickName;
+        this.password = password;
+        this.server = server;
     }
 
 }

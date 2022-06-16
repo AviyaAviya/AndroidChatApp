@@ -6,28 +6,28 @@ import androidx.room.PrimaryKey;
 public class Login {
 
     public Login(String userName, String password) {
-        UserId = userName;
-        Password = password;
+        userId = userName;
+        this.password = password;
     }
 
     public String getUserId() {
-        return UserId;
+        return userId;
     }
 
     public void setUserId(String userId) {
-        UserId = userId;
+        this.userId = userId;
     }
 
     public String getPassword() {
-        return Password;
+        return password;
     }
 
     public void setPassword(String password) {
-        Password = password;
+        this.password = password;
     }
 
     @PrimaryKey
-        private String UserId;
-        private String Password ;
+        private String userId;
+        private String password;
 
 }

@@ -1,5 +1,6 @@
 package com.example.chat.activity;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,8 +16,8 @@ import androidx.room.Room;
 
 import com.example.chat.adapter.MessagesListAdapter;
 import com.example.chat.entitys.Message;
-import com.example.chat.room.AppDB;
-import com.example.chat.room.MessageDao;
+//import com.example.chat.room.AppDB;
+//import com.example.chat.room.MessageDao;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
@@ -27,9 +28,9 @@ import java.util.List;
 public class ChatActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     //the data base
-    private AppDB db;
-    //using room
-    private MessageDao messageDao;
+//    private AppDB db;
+//    //using room
+//    private MessageDao messageDao;
     //the contact data
     private List<Message> messages;
     //to adapt the list view
@@ -44,15 +45,23 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setThemeOfApp();
         setContentView(R.layout.activity_chat);
-        //building db
-        db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "MessagesDB").allowMainThreadQueries().build();
 
-        messageDao = db.messageDao();
+        SharedPreferences prefs;
+        SharedPreferences.Editor edit;
+        //userName with pref
+        prefs=this.getSharedPreferences("myPrefs2", Context.MODE_PRIVATE);
+        String userName = prefs.getString("userName","");
+
+
+        //building db
+//        db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "MessagesDB").allowMainThreadQueries().build();
+//
+//        messageDao = db.messageDao();
         //list of contacts
         RecyclerView lvMessages = findViewById(R.id.lvMessages);
         messages = new ArrayList<>();
         contentOfMessage = findViewById(R.id.message_text);
-        messages.add(new Message(contentOfMessage.getText().toString()));
+//        messages.add(new Message(contentOfMessage.getText().toString()));
 
         final MessagesListAdapter adapter = new MessagesListAdapter(this);
         //list of contacts
@@ -74,8 +83,8 @@ public class ChatActivity extends AppCompatActivity {
         Button btnSend = findViewById(R.id.btnSend);
         btnSend.setOnClickListener(v -> {
             contentOfMessage = findViewById(R.id.message_text);
-            message = new Message(contentOfMessage.getText().toString());
-            messageDao.insert(message);
+//            message = new Message(contentOfMessage.getText().toString());
+//            messageDao.insert(message);
 
         });
 

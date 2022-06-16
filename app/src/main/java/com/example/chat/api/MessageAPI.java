@@ -1,7 +1,6 @@
 package com.example.chat.api;
 
 import com.example.chat.activity.R;
-import com.example.chat.entitys.Contact;
 import com.example.chat.activity.MyApplication;
 import com.example.chat.entitys.Message;
 
@@ -26,13 +25,14 @@ public class MessageAPI {
         webServiceAPI = retrofit.create(IMessagesAPI.class);
     }
 
-    public void getMessages(String token, String id) {
-        Call<List<Message>> call = webServiceAPI.getMessages("Bearer " + token,id);
+    public void getMessages(String token, String contactName) {
+        Call<List<Message>> call = webServiceAPI.getMessages("Bearer " + token,contactName);
 
         call.enqueue(new Callback<List<Message>>() {
             @Override
             public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
-                List<Message> contacts = response.body();
+                List<Message> messages = response.body();
+                int a = 1;
             }
 
             @Override
@@ -40,8 +40,8 @@ public class MessageAPI {
         });
     }
 
-    public void CreateMessage(String token, String contactName){
-        Call<Object> call = webServiceAPI.createMessage(token,contactName);
+    public void CreateMessage(String token, String contactName, Message message){
+        Call<Object> call = webServiceAPI.createMessage("Bearer " + token,contactName, message);
         call.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {

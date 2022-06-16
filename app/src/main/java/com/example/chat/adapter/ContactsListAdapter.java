@@ -52,8 +52,8 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
     public void onBindViewHolder(ContactViewHolder holder, int position) {
         if (contacts != null) {
             final Contact current = contacts.get(position);
-            holder.name_of_contact.setText(current.getContent());
-            holder.imageOfContact.setImageResource(current.getPic());
+//            holder.name_of_contact.setText(current.getContent());
+//            holder.imageOfContact.setImageResource(current.getPic());
         }
     }
 
@@ -70,9 +70,9 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
             return 0;
     }
 
-    public List<Contact> getContacts() {
-        return contacts;
-    }
+//    public List<Contact> getContacts() {
+//        return contacts;
+//    }
 
     public interface ListenerOnClick {
         void onItemClick(View v, int position);

@@ -1,5 +1,6 @@
 package com.example.chat.api;
 
+import com.example.chat.entitys.Contact;
 import com.example.chat.entitys.Login;
 import com.example.chat.entitys.Message;
 import com.example.chat.entitys.User;
@@ -19,7 +20,7 @@ public interface IMessagesAPI {
     Call<List<Message>> getMessages(@Header("Authorization") String jwt,@Path("id") String id);
 
 @POST("contacts/{id}/messages")
-Call<Object> createMessage(@Header("Authorization") String jwt, @Path("id") String id);
+Call<Object> createMessage(@Header("Authorization") String jwt, @Path("id") String id, @Body Message message);
 
 @POST("users/signin")
     Call<Object> signin(@Body Login login);

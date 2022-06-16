@@ -11,17 +11,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Room;
 
 //import com.example.chat.R;
 import com.example.chat.adapter.ContactsListAdapter;
 import com.example.chat.api.ContactsAPI;
+import com.example.chat.api.MessageAPI;
+import com.example.chat.api.UsersAPI;
 import com.example.chat.entitys.Contact;
-import com.example.chat.room.AppDB;
-import com.example.chat.room.ContactDao;
+//import com.example.chat.room.AppDB;
+//import com.example.chat.room.ContactDao;
+import com.example.chat.entitys.Message;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -29,9 +30,9 @@ import java.util.List;
 public class ContactActivity extends AppCompatActivity implements ContactsListAdapter.ListenerOnClick {
     SharedPreferences sharedPreferences;
     //the data base
-    private AppDB db;
+//    private AppDB db;
     //using room
-    private ContactDao contactDao;
+//    private ContactDao contactDao;
     //the contact data
     private List<Contact> contacts;
     private ContactsListAdapter adapter;
@@ -55,9 +56,30 @@ public class ContactActivity extends AppCompatActivity implements ContactsListAd
         String token = prefs.getString("token","");
         //
 
+        //userName with pref
+        prefs=this.getSharedPreferences("myPrefs2",Context.MODE_PRIVATE);
+        String userName = prefs.getString("userName","");
+
+
+        UsersAPI m1 = new UsersAPI();
+        m1.get();
+
         ContactsAPI api = new ContactsAPI();
-        api.getContact(token);
-        api.CreateContact(token,new Contact());
+        api.getContacts(token);
+
+
+        MessageAPI m = new MessageAPI();
+        m.getMessages(token,"ori");
+        Message mes = new Message("ori","string","text","abc",null,true);
+        m.CreateMessage(token,"ori",mes);
+
+//        Contact c = new Contact("ori","ori","aaa");
+//
+//        api.CreateContact(token,c);
+
+
+
+//        api.CreateContact(token,new Contact());
 
 //        SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
 //        editor.putString("name", "Elena");
@@ -65,9 +87,9 @@ public class ContactActivity extends AppCompatActivity implements ContactsListAd
 //        editor.apply();
 
 //building db
-        db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ContactsDB").allowMainThreadQueries().build();
+//        db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ContactsDB").allowMainThreadQueries().build();
 
-        contactDao = db.contactDao();
+//        contactDao = db.contactDao();
 
         FloatingActionButton btnAdd = findViewById(R.id.btnAdd);
         //when click on btn, go to page adding new contact
@@ -77,8 +99,8 @@ public class ContactActivity extends AppCompatActivity implements ContactsListAd
         });
         RecyclerView lstContacts = findViewById(R.id.lstContacts);
 
-        contacts = new ArrayList<>();
-        contacts.add(new Contact("example for contact", R.drawable.person_ic));
+//        contacts = new ArrayList<>();
+//        contacts.add(new Contact("example for contact", R.drawable.person_ic));
 
         adapter = new ContactsListAdapter(this);
         //list of contacts
@@ -99,7 +121,7 @@ public class ContactActivity extends AppCompatActivity implements ContactsListAd
         Contact contact = contacts.get(position);
         Intent i = new Intent(this, ChatActivity.class);
         //so we would know which chat history to get
-        i.putExtra("contactID", contact.getId());
+//        i.putExtra("contactID", contact.getId());
         startActivity(i);
     }
     private void setThemeOfApp(){

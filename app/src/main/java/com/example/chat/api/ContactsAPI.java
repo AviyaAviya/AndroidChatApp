@@ -1,15 +1,8 @@
 package com.example.chat.api;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.util.Log;
-
-import com.example.chat.activity.ContactActivity;
 import com.example.chat.activity.R;
 import com.example.chat.entitys.Contact;
 import com.example.chat.activity.MyApplication;
-import com.example.chat.entitys.Login;
 
 import java.util.List;
 
@@ -32,7 +25,22 @@ public class ContactsAPI {
         webServiceAPI = retrofit.create(IContactsAPI.class);
     }
 
-    public void getContact(String token) {
+
+//    public void getContacts(String token) {
+//        Call<String> call = webServiceAPI.getContacts("Bearer " + token);
+//        call.enqueue(new Callback<String>() {
+//            @Override
+//            public void onResponse(Call<String> call, Response<String> response) {
+//                String contacts = response.body();
+//            }
+//
+//            @Override
+//            public void onFailure(Call<String> call, Throwable t) {}
+//        });
+//    }
+
+
+    public void getContacts(String token) {
         Call<List<Contact>> call = webServiceAPI.getContacts("Bearer " + token);
         call.enqueue(new Callback<List<Contact>>() {
             @Override
@@ -46,7 +54,7 @@ public class ContactsAPI {
     }
 
     public void CreateContact(String token, Contact contact){
-        Call<Object> call = webServiceAPI.createContact(token,contact);
+        Call<Object> call = webServiceAPI.createContact("Bearer " + token,contact);
         call.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {
