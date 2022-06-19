@@ -28,6 +28,7 @@ public class ResignActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //set color of app
         setThemeOfApp();
+        //show the lay out
         setContentView(R.layout.activity_resign);
         //fitcher
         Button btn = findViewById(R.id.buttonSurpise);
@@ -38,13 +39,7 @@ public class ResignActivity extends AppCompatActivity {
             }
         });
 
-//        btn.setOnClickListener(v -> {
-//            Toast toast = Toast.makeText(getApplicationContext(),
-//                    "There is nothing here so it is a surprise",
-//                    Toast.LENGTH_SHORT);
-//            toast.setGravity(Gravity.CENTER, 0, 0);
-//            toast.show();
-//        });
+
         Button btnSubmit = findViewById(R.id.buttonSubmitReg);
 
         btnSubmit.setOnClickListener(v -> {
@@ -59,6 +54,7 @@ public class ResignActivity extends AppCompatActivity {
 
 
     }
+    //show messgage on screen when you cilck a btn, that a fitcheer for the settings
     void showToast() {
         Toast toast = new Toast(this);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
@@ -71,7 +67,7 @@ public class ResignActivity extends AppCompatActivity {
         }
     }
 
-
+//check validation of name
     private boolean validateFullName() {
         TextView fullNameTV = findViewById(R.id.fullName);
         //String val = fullName.toString();
@@ -86,7 +82,7 @@ public class ResignActivity extends AppCompatActivity {
         }
 
     }
-
+//check validation of nick name
     private boolean validateNickName() {
         TextView nickNameTV = findViewById(R.id.userName);
         //String val = nickName.toString();
@@ -99,7 +95,7 @@ public class ResignActivity extends AppCompatActivity {
         }
 
     }
-
+//check validation of password
     private boolean validatePassword() {
         TextView passwordTV = findViewById(R.id.password);
         //String val = password.toString();
@@ -124,7 +120,7 @@ public class ResignActivity extends AppCompatActivity {
         }
 
     }
-
+//check validation of password if it match to the another one
     private boolean validateEnsurePa() {
         EditText ensurePassword = findViewById(R.id.ensurePassword);
         //String val = ensurePassword.toString();
@@ -153,7 +149,7 @@ public class ResignActivity extends AppCompatActivity {
 
 
     }
-
+//settings change color
     private void setThemeOfApp() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         if (sharedPreferences.getString("color", "TEAL").equals("TEAL")) {

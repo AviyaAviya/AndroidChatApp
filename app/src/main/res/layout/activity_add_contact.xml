@@ -16,21 +16,37 @@
         tools:layout_editor_absoluteX="10dp">
 
         <EditText
-            android:id="@+id/nickName"
+            android:id="@+id/nickNameContact"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="enter contact nickname" />
+        <EditText
+            android:id="@+id/userNameContact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="enter contact userName" />
+        <EditText
+            android:id="@+id/server"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="enter contact server" />
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/haker"/>
+            android:src="@drawable/haker"
+            android:adjustViewBounds="true"
+            android:maxWidth="150dp"
+            android:maxHeight="150dp"
+            android:scaleType="fitCenter"
+            />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/btnSave"
             android:layout_gravity="center_horizontal"
-            android:id="@+id/btnSave"/>
+            android:id="@+id/btnSave"
+            android:layout_marginBottom="70dp"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

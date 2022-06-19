@@ -12,13 +12,17 @@ public class Message {
 
     public String to;
 
-    public Message(String from, String to, String type, String content, String created, boolean sent) {
-        this.from = from;
-        this.to = to;
-        this.type = type;
+//    public Message(String from, String to, String type, String content, String created, boolean sent) {
+//        this.from = from;
+//        this.to = to;
+//        this.type = type;
+//        this.content = content;
+//        this.created = created;
+//        this.sent = sent;
+//    }
+    public Message(String content){
         this.content = content;
-        this.created = created;
-        this.sent = sent;
+
     }
 
     public int getId() {
@@ -69,6 +73,7 @@ public class Message {
         this.created = created;
     }
 
+   //true or false, sent or get
     public boolean isSent() {
         return sent;
     }

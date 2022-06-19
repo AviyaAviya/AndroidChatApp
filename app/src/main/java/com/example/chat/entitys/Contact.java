@@ -1,11 +1,32 @@
 package com.example.chat.entitys;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 //contact
 @Entity
 public class Contact {
+    @PrimaryKey(autoGenerate = true)
+
+    private int id;
+    //user name of contact
+    @Ignore
+    private String contactName;
+    //user name belong to
+    private  String userName;
+    //nickname
+    private String nickName;
+
+    private String server;
+    //last message
+    //can be null
+    @Ignore
+    private String last;
+    //can be null
+    @Ignore
+    private String LastDate;
+
 
     public int getId() {
         return id;
@@ -15,6 +36,7 @@ public class Contact {
         this.id = id;
     }
 
+//to which user the contact belong
     public String getContactName() {
         return contactName;
     }
@@ -22,6 +44,7 @@ public class Contact {
     public void setContactName(String contactName) {
         this.contactName = contactName;
     }
+    //the real name of contact, his id
 
     public String getUserName() {
         return userName;
@@ -30,6 +53,7 @@ public class Contact {
     public void setUserName(String userName) {
         this.userName = userName;
     }
+    //the nickname the user chose to call the contact
 
     public String getNickName() {
         return nickName;
@@ -46,7 +70,7 @@ public class Contact {
     public void setServer(String server) {
         this.server = server;
     }
-
+//lase message
     public String getLast() {
         return last;
     }
@@ -63,16 +87,6 @@ public class Contact {
 //        LastDate = lastDate;
 //    }
 
-    @PrimaryKey
-    private int id;
-    //user name of contact
-
-    private String contactName;
-    //user name belong to
-    private  String userName;
-    //nickname
-    private String nickName;
-    private String server;
 
 
     public Contact(String ContactName,int Id,String Last,String LastDate,String NickName,String Server, String UserName) {
@@ -85,11 +99,8 @@ public class Contact {
         this.LastDate = LastDate;
     }
 
-    //last message
-    //can be null
-    private String last;
-    //can be null
-    private String LastDate;
+
+
     public Contact( String ContactName, String NickName, String Server){
 
         this.contactName = ContactName;
@@ -97,7 +108,7 @@ public class Contact {
         this.server =Server;
     }
 
-
+public  Contact(){}
 
 
 

@@ -13,7 +13,6 @@ import androidx.preference.PreferenceManager;
 
 import com.example.chat.api.UsersAPI;
 import com.example.chat.entitys.Login;
-import com.example.chat.entitys.User;
 
 public class LogInActivity extends AppCompatActivity {
     //color of app
@@ -30,23 +29,21 @@ public class LogInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         //the button of the log in
         Button btnLogin = findViewById(R.id.buttonLogIn);
-        btnLogin.setOnClickListener(v -> {
 
 
 
             //taking input
             TextView usernameTV = findViewById(R.id.userNameLogIn);
             TextView passwordTV = findViewById(R.id.passwordLogIn);
-            //moving to screen contacts list
-//            //TODO CHECK IF USER EXIST IN DB
-//            if(true){
-//                //TODO CHECK IF PASSWORD CORRECT
-//                if(true){
-                    //need to save user
-                    login = new Login(usernameTV.getText().toString(),passwordTV.getText().toString());
-                    UsersAPI userApi1 = new UsersAPI();
+        btnLogin.setOnClickListener(v -> {
 
-                    userApi1.sighin(login,this);
+            //need to save user
+            login = new Login(usernameTV.getText().toString(), passwordTV.getText().toString());
+            //connect to server
+            UsersAPI userApi1 = new UsersAPI();
+//send the user info(name and password)
+            userApi1.sighin(login, this);
+    });
 
 //                }
 //                else{
@@ -59,9 +56,9 @@ public class LogInActivity extends AppCompatActivity {
 //                usernameTV.setError("are you invisible? we cant see you in our app ");
 //            }
 
-        });
+
         //to the log cat print where am i
-        Log.i("MainActivity", "onCreate");
+        Log.i("LogInActivity", "onCreate");
         //botton of the register
         Button btnRegite = findViewById(R.id.buttonRegister);
         btnRegite.setOnClickListener(v -> {
@@ -81,12 +78,14 @@ public class LogInActivity extends AppCompatActivity {
 
     }
 
-    private void setThemeOfApp(){
+
+
+    private void setThemeOfApp() {
+        //set color of app
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        if(sharedPreferences.getString("color","TEAL").equals("TEAL")){
+        if (sharedPreferences.getString("color", "TEAL").equals("TEAL")) {
             setTheme(R.style.teal);
-        }
-        else {
+        } else {
             setTheme(R.style.turqiz);
         }
     }
@@ -95,36 +94,36 @@ public class LogInActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Log.i("MainActivity", "onStart");
+        Log.i("LogInActivity", "onStart");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i("MainActivity", "onResume");
+        Log.i("LogInActivity", "onResume");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.i("MainActivity", "onPause");
+        Log.i("LogInActivity", "onPause");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.i("MainActivity", "onStop");
+        Log.i("LogInActivity", "onStop");
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.i("MainActivity", "onRestart");
+        Log.i("LogInActivity", "onRestart");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.i("MainActivity", "onDestroy");
+        Log.i("LogInActivity", "onDestroy");
     }
 }

@@ -11,16 +11,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
-//import com.example.chat.R;
 import com.example.chat.adapter.ContactsListAdapter;
 import com.example.chat.api.ContactsAPI;
-import com.example.chat.api.MessageAPI;
 import com.example.chat.api.UsersAPI;
 import com.example.chat.entitys.Contact;
-//import com.example.chat.room.AppDB;
-//import com.example.chat.room.ContactDao;
-import com.example.chat.entitys.Message;
+import com.example.chat.room.AppDB;
+import com.example.chat.room.ContactDao;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -30,13 +28,12 @@ import java.util.List;
 public class ContactActivity extends AppCompatActivity implements ContactsListAdapter.ListenerOnClick {
     SharedPreferences sharedPreferences;
     //the data base
-//    private AppDB db;
+   private AppDB db;
     //using room
-//    private ContactDao contactDao;
+   private ContactDao contactDao;
     //the contact data
     private List<Contact> contacts;
-    private ContactsListAdapter adapter;
-
+    private  ContactsListAdapter adapter;
 
 
 
@@ -48,17 +45,16 @@ public class ContactActivity extends AppCompatActivity implements ContactsListAd
         setContentView(R.layout.activity_contacts);
 
 
-
         //any time we want the token
         SharedPreferences prefs;
         SharedPreferences.Editor edit;
-        prefs=this.getSharedPreferences("myPrefs",Context.MODE_PRIVATE);
-        String token = prefs.getString("token","");
+        prefs = this.getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
+        String token = prefs.getString("token", "");
         //
 
         //userName with pref
-        prefs=this.getSharedPreferences("myPrefs2",Context.MODE_PRIVATE);
-        String userName = prefs.getString("userName","");
+        prefs = this.getSharedPreferences("myPrefs2", Context.MODE_PRIVATE);
+        String userName = prefs.getString("userName", "");
 
 
         UsersAPI m1 = new UsersAPI();
@@ -68,15 +64,11 @@ public class ContactActivity extends AppCompatActivity implements ContactsListAd
         api.getContacts(token);
 
 
-        MessageAPI m = new MessageAPI();
-        m.getMessages(token,"ori");
-        Message mes = new Message("ori","string","text","abc",null,true);
-        m.CreateMessage(token,"ori",mes);
+
 
 //        Contact c = new Contact("ori","ori","aaa");
 //
 //        api.CreateContact(token,c);
-
 
 
 //        api.CreateContact(token,new Contact());
@@ -87,49 +79,50 @@ public class ContactActivity extends AppCompatActivity implements ContactsListAd
 //        editor.apply();
 
 //building db
-//        db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ContactsDB").allowMainThreadQueries().build();
+        db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ContactsDB").allowMainThreadQueries().fallbackToDestructiveMigration().build();
 
-//        contactDao = db.contactDao();
 
+        contactDao = db.contactDao();
+        //clearTableContact
+        //contactDao.nukeTable();
         FloatingActionButton btnAdd = findViewById(R.id.btnAdd);
         //when click on btn, go to page adding new contact
         btnAdd.setOnClickListener(v -> {
             Intent i = new Intent(this, addContactActivity.class);
+            //passing the list to update new contact in adapter
+           // i.putExtra("listContacts",(Serializable) contacts);
             startActivity(i);
         });
+
         RecyclerView lstContacts = findViewById(R.id.lstContacts);
+        //delete data from table complettly
+        contactDao.nukeTable();
+        //passing data from server to local storage
+        api.getContacts(token);
+        //passing data from storage to server
+        contacts = contactDao.index();
+        //contacts = new ArrayList<>();
 
-//        contacts = new ArrayList<>();
-//        contacts.add(new Contact("example for contact", R.drawable.person_ic));
 
-        adapter = new ContactsListAdapter(this);
+        adapter = new ContactsListAdapter(this, this);
         //list of contacts
         lstContacts.setAdapter(adapter);
         lstContacts.setLayoutManager(new LinearLayoutManager(this));
         //posts.add(new Post("hello",R.drawable.person_ic));
+
         adapter.setContacts(contacts);
-//        contacts.clear();
-//        contacts.addAll(contactDao.index());
-//        adapter.notifyDataSetChanged();
+
 
 
     }
-    //on short click , go to chat
 
-    @Override
-    public void onItemClick(View v, int position) {
-        Contact contact = contacts.get(position);
-        Intent i = new Intent(this, ChatActivity.class);
-        //so we would know which chat history to get
-//        i.putExtra("contactID", contact.getId());
-        startActivity(i);
-    }
-    private void setThemeOfApp(){
+
+
+    private void setThemeOfApp() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        if(sharedPreferences.getString("color","TEAL").equals("TEAL")){
+        if (sharedPreferences.getString("color", "TEAL").equals("TEAL")) {
             setTheme(R.style.teal);
-        }
-        else {
+        } else {
             setTheme(R.style.turqiz);
         }
     }
@@ -138,7 +131,9 @@ public class ContactActivity extends AppCompatActivity implements ContactsListAd
     //make the changes seen in run time
     protected void onResume() {
         super.onResume();
-
+   contacts.clear();
+   contacts.addAll(contactDao.index());
+   adapter.notifyDataSetChanged();
         Log.i("Contacts", "onResume");
     }
 
@@ -175,4 +170,12 @@ public class ContactActivity extends AppCompatActivity implements ContactsListAd
     }
 
 
+    @Override
+    public void onItemClick(View v, int position) {
+        Contact contact = contacts.get(position);
+        Intent i = new Intent( this,ChatActivity.class);
+        //so we would know which chat history to get
+        i.putExtra("contactID", contact.getContactName());
+        startActivity(i);
+    }
 }

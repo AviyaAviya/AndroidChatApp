@@ -19,8 +19,8 @@
 
 
         <SwitchPreferenceCompat
-app:defaultValue="false"
-            app:key="attachment"
+app:defaultValue="true"
+            app:key="surpise_visibilty"
             app:summary="dont show the suprise if I switch"
             app:title="show or hide surpise" />
 

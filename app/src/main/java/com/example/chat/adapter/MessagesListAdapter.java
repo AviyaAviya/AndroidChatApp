@@ -23,7 +23,7 @@ public class MessagesListAdapter extends RecyclerView.Adapter<MessagesListAdapte
 
         private MessageViewHolder(View itemView) {
             super(itemView);
-            tvMessage = itemView.findViewById(R.id.message_text);
+            tvMessage = itemView.findViewById(R.id.textMessage);
         }
 
 
@@ -48,7 +48,7 @@ public class MessagesListAdapter extends RecyclerView.Adapter<MessagesListAdapte
     public void onBindViewHolder(MessagesListAdapter.MessageViewHolder holder, int position) {
         if (messages != null) {
             final Message current = messages.get(position);
-//            holder.tvMessage.setText(current.getContent());
+           holder.tvMessage.setText(current.getContent());
         }
     }
 

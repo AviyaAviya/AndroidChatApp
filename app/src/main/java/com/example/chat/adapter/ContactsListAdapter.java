@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,41 +17,54 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
     private ListenerOnClick listenerOnClick;
 
     class ContactViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private final TextView name_of_contact;
-        private final ImageView imageOfContact;
+        private final TextView nickname_of_contact;
 
 
-        private ContactViewHolder(View itemView) {
+        ListenerOnClick listenerOnClick;
+       // private final ImageView imageOfContact;
+
+
+
+        private ContactViewHolder( View itemView, ListenerOnClick listenerOnClick) {
             super(itemView);
-            name_of_contact = itemView.findViewById(R.id.name_of_contact);
-            imageOfContact = itemView.findViewById(R.id.imageOfContact);
+            nickname_of_contact = itemView.findViewById(R.id.nickname_of_contact);
+
+            this.listenerOnClick = listenerOnClick;
+        itemView.setOnClickListener(this);
+
+            //   imageOfContact = itemView.findViewById(R.id.imageOfContact);
         }
 
         @Override
         public void onClick(View v) {
-            if (listenerOnClick != null)
-                listenerOnClick.onItemClick(v, getAdapterPosition());
+            listenerOnClick.onItemClick(v,getAdapterPosition());
+//            if (listenerOnClick != null)
+//                listenerOnClick.onItemClick(v, getAdapterPosition());
         }
     }
 
     private final LayoutInflater mInflater;
     private List<Contact> contacts;
 
-    public ContactsListAdapter(Context context) {
+    public ContactsListAdapter(Context context, ListenerOnClick listenerOnClick) {
         mInflater = LayoutInflater.from(context);
+        this.listenerOnClick = listenerOnClick;
+
     }
 
     @Override
     public ContactViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = mInflater.inflate(R.layout.contact_layout, parent, false);
-        return new ContactViewHolder(itemView);
+        return new ContactViewHolder(itemView, listenerOnClick);
     }
 
     @Override
     public void onBindViewHolder(ContactViewHolder holder, int position) {
         if (contacts != null) {
             final Contact current = contacts.get(position);
-//            holder.name_of_contact.setText(current.getContent());
+            holder.nickname_of_contact.setText(current.getNickName());
+
+
 //            holder.imageOfContact.setImageResource(current.getPic());
         }
     }
@@ -70,9 +82,9 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
             return 0;
     }
 
-//    public List<Contact> getContacts() {
-//        return contacts;
-//    }
+    public List<Contact> getContacts() {
+        return contacts;
+    }
 
     public interface ListenerOnClick {
         void onItemClick(View v, int position);

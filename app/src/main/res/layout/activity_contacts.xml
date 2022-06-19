@@ -36,18 +36,24 @@
         android:layout_width="408dp"
         android:layout_height="572dp"
         app:layout_constraintBottom_toBottomOf="parent"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar2">
         android:id="@+id/refreshLayout"
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/lstContacts"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/darker_gray"
-            android:clickable="true"
-            android:focusable="true" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lstContacts"
+        android:layout_width="416dp"
+        android:layout_height="624dp"
+        android:background="@android:color/darker_gray"
+        android:clickable="true"
+        android:paddingLeft="10dp"
+        android:focusable="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteY="107dp" />
 
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

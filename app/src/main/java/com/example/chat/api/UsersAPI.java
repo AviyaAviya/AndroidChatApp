@@ -77,7 +77,9 @@ public class UsersAPI {
                     edit.commit();
 
                     Intent i = new Intent(activity, ContactActivity.class);
-
+                    //sending the user id to the activity
+          //          i.putExtra("idUserName",login.getUserId());
+                    activity.startActivity(i);
 
                     prefs=activity.getSharedPreferences("myPrefs2",Context.MODE_PRIVATE);
                     edit=prefs.edit();

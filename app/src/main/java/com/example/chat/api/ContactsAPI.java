@@ -1,8 +1,10 @@
 package com.example.chat.api;
 
+import com.example.chat.activity.MyApplication;
 import com.example.chat.activity.R;
 import com.example.chat.entitys.Contact;
-import com.example.chat.activity.MyApplication;
+import com.example.chat.room.AppDB;
+import com.example.chat.room.ContactDao;
 
 import java.util.List;
 
@@ -16,6 +18,10 @@ public class ContactsAPI {
     //    private MutableLiveData<List<Contact>> postListData;
     Retrofit retrofit;
     IContactsAPI webServiceAPI;
+    //the data base
+    private AppDB db;
+    //using room
+    private ContactDao contactDao;
 
     public ContactsAPI() {
         retrofit = new Retrofit.Builder()
@@ -41,11 +47,18 @@ public class ContactsAPI {
 
 
     public void getContacts(String token) {
+        //db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ContactsDB").allowMainThreadQueries().fallbackToDestructiveMigration().build();
         Call<List<Contact>> call = webServiceAPI.getContacts("Bearer " + token);
         call.enqueue(new Callback<List<Contact>>() {
             @Override
             public void onResponse(Call<List<Contact>> call, Response<List<Contact>> response) {
                 List<Contact> contacts = response.body();
+                //update contactDao
+                contactDao = db.contactDao();
+                for (Contact c : contacts)
+                {
+                    contactDao.insert(c);
+                }
             }
 
             @Override
