@@ -15,7 +15,6 @@ import androidx.room.Room;
 
 import com.example.chat.adapter.ContactsListAdapter;
 import com.example.chat.api.ContactsAPI;
-import com.example.chat.api.UsersAPI;
 import com.example.chat.entitys.Contact;
 import com.example.chat.room.AppDB;
 import com.example.chat.room.ContactDao;
@@ -28,14 +27,13 @@ import java.util.List;
 public class ContactActivity extends AppCompatActivity implements ContactsListAdapter.ListenerOnClick {
     SharedPreferences sharedPreferences;
     //the data base
-   private AppDB db;
+    private AppDB db;
     //using room
-   private ContactDao contactDao;
+    private ContactDao contactDao;
     //the contact data
     private List<Contact> contacts;
-    private  ContactsListAdapter adapter;
-
-
+    private ContactsListAdapter adapter;
+    private ContactsAPI api;
 
 
     @Override
@@ -44,80 +42,42 @@ public class ContactActivity extends AppCompatActivity implements ContactsListAd
         setThemeOfApp();
         setContentView(R.layout.activity_contacts);
 
-
-        //any time we want the token
+        //any time we want the token- of the user
         SharedPreferences prefs;
-        SharedPreferences.Editor edit;
         prefs = this.getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
         String token = prefs.getString("token", "");
-        //
-
-        //userName with pref
-        prefs = this.getSharedPreferences("myPrefs2", Context.MODE_PRIVATE);
-        String userName = prefs.getString("userName", "");
 
 
-        UsersAPI m1 = new UsersAPI();
-        m1.get();
-
-        ContactsAPI api = new ContactsAPI();
-        api.getContacts(token);
-
-
-
-
-//        Contact c = new Contact("ori","ori","aaa");
-//
-//        api.CreateContact(token,c);
-
-
-//        api.CreateContact(token,new Contact());
-
-//        SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-//        editor.putString("name", "Elena");
-//        editor.putInt("idName", 12);
-//        editor.apply();
-
-//building db
         db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ContactsDB").allowMainThreadQueries().fallbackToDestructiveMigration().build();
 
 
         contactDao = db.contactDao();
-        //clearTableContact
-        //contactDao.nukeTable();
+        contactDao.nukeTable();
+        api = new ContactsAPI(contactDao);
+
+
         FloatingActionButton btnAdd = findViewById(R.id.btnAdd);
         //when click on btn, go to page adding new contact
         btnAdd.setOnClickListener(v -> {
             Intent i = new Intent(this, addContactActivity.class);
-            //passing the list to update new contact in adapter
-           // i.putExtra("listContacts",(Serializable) contacts);
             startActivity(i);
         });
 
         RecyclerView lstContacts = findViewById(R.id.lstContacts);
-        //delete data from table complettly
-        contactDao.nukeTable();
-        //passing data from server to local storage
         api.getContacts(token);
-        //passing data from storage to server
         contacts = contactDao.index();
-        //contacts = new ArrayList<>();
 
 
         adapter = new ContactsListAdapter(this, this);
-        //list of contacts
         lstContacts.setAdapter(adapter);
         lstContacts.setLayoutManager(new LinearLayoutManager(this));
-        //posts.add(new Post("hello",R.drawable.person_ic));
 
         adapter.setContacts(contacts);
 
 
-
     }
 
-
-
+//settings- color of app
     private void setThemeOfApp() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         if (sharedPreferences.getString("color", "TEAL").equals("TEAL")) {
@@ -131,9 +91,13 @@ public class ContactActivity extends AppCompatActivity implements ContactsListAd
     //make the changes seen in run time
     protected void onResume() {
         super.onResume();
-   contacts.clear();
-   contacts.addAll(contactDao.index());
-   adapter.notifyDataSetChanged();
+        contacts.clear();
+        SharedPreferences prefs;
+        prefs = this.getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
+        String token = prefs.getString("token", "");
+        api.getContacts(token);
+        contacts.addAll(contactDao.index());
+        adapter.notifyDataSetChanged();
         Log.i("Contacts", "onResume");
     }
 
@@ -173,7 +137,7 @@ public class ContactActivity extends AppCompatActivity implements ContactsListAd
     @Override
     public void onItemClick(View v, int position) {
         Contact contact = contacts.get(position);
-        Intent i = new Intent( this,ChatActivity.class);
+        Intent i = new Intent(this, ChatActivity.class);
         //so we would know which chat history to get
         i.putExtra("contactID", contact.getContactName());
         startActivity(i);

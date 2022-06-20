@@ -44,7 +44,6 @@ public class ResignActivity extends AppCompatActivity {
 
         btnSubmit.setOnClickListener(v -> {
             if (registerUser()) {
-//TODO MAKE FUNC THAT TAKES THE INPUT AND SEND TO DB TO CREATE A USER
                 //moving to screen contacts list
                 Intent i = new Intent(this, LogInActivity.class);
                 startActivity(i);
@@ -54,11 +53,12 @@ public class ResignActivity extends AppCompatActivity {
 
 
     }
+
     //show messgage on screen when you cilck a btn, that a fitcheer for the settings
     void showToast() {
         Toast toast = new Toast(this);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        if (sharedPreferences.getBoolean("surpise_visibilty",true)) {
+        if (sharedPreferences.getBoolean("surpise_visibilty", true)) {
             toast.setDuration(Toast.LENGTH_SHORT);
             View toastView = getLayoutInflater().inflate(R.layout.costum_toast, (ViewGroup) findViewById(R.id.toastLayout));
             toast.setView(toastView);
@@ -67,22 +67,20 @@ public class ResignActivity extends AppCompatActivity {
         }
     }
 
-//check validation of name
+    //check validation of name
     private boolean validateFullName() {
         TextView fullNameTV = findViewById(R.id.fullName);
-        //String val = fullName.toString();
         if (fullNameTV.length() == 0) {
             fullNameTV.setError("Sorry buddy, it cannot be empty");
             return false;
         } else {
-            //fullName.setError(null);
-            //userName.setErrorEnabled(false):
             fullName = fullNameTV.getText().toString();
             return true;
         }
 
     }
-//check validation of nick name
+
+    //check validation of nick name
     private boolean validateNickName() {
         TextView nickNameTV = findViewById(R.id.userName);
         //String val = nickName.toString();
@@ -95,7 +93,8 @@ public class ResignActivity extends AppCompatActivity {
         }
 
     }
-//check validation of password
+
+    //check validation of password
     private boolean validatePassword() {
         TextView passwordTV = findViewById(R.id.password);
         //String val = password.toString();
@@ -109,32 +108,27 @@ public class ResignActivity extends AppCompatActivity {
         if (passwordTV.length() == 0) {
             passwordTV.setError("Ooops, its empty");
             return false;
-        }
-        else if (!passwordTV.getText().toString().matches(passwordVal)) {
+        } else if (!passwordTV.getText().toString().matches(passwordVal)) {
             passwordTV.setError("Your password does not gonna make it! try again");
             return false;
-        }
-        else {
+        } else {
             password = passwordTV.getText().toString();
             return true;
         }
 
     }
-//check validation of password if it match to the another one
+
+    //check validation of password if it match to the another one
     private boolean validateEnsurePa() {
         EditText ensurePassword = findViewById(R.id.ensurePassword);
-        //String val = ensurePassword.toString();
         EditText password = findViewById(R.id.password);
-        //String val2 = password.toString();
         if (ensurePassword.length() == 0) {
             ensurePassword.setError("Sorry buddy, it cannot be empty");
             return false;
-        }
-        else if (!ensurePassword.getText().toString().equals(password.getText().toString())) {
+        } else if (!ensurePassword.getText().toString().equals(password.getText().toString())) {
             ensurePassword.setError("Hmmmm, its seems they are not a perfect match");
             return false;
         } else {
-            //ensurePassword.setError(null);
             return true;
         }
 
@@ -149,7 +143,8 @@ public class ResignActivity extends AppCompatActivity {
 
 
     }
-//settings change color
+
+    //settings change color
     private void setThemeOfApp() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         if (sharedPreferences.getString("color", "TEAL").equals("TEAL")) {

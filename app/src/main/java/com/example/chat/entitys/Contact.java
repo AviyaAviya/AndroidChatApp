@@ -14,7 +14,7 @@ public class Contact {
     @Ignore
     private String contactName;
     //user name belong to
-    private  String userName;
+    private String userName;
     //nickname
     private String nickName;
 
@@ -36,7 +36,7 @@ public class Contact {
         this.id = id;
     }
 
-//to which user the contact belong
+    //to which user the contact belong
     public String getContactName() {
         return contactName;
     }
@@ -70,7 +70,8 @@ public class Contact {
     public void setServer(String server) {
         this.server = server;
     }
-//lase message
+
+    //lase message
     public String getLast() {
         return last;
     }
@@ -79,17 +80,8 @@ public class Contact {
         this.last = last;
     }
 
-//    public String getLastDate() {
-//        return LastDate;
-//    }
-//
-//    public void setLastDate(String lastDate) {
-//        LastDate = lastDate;
-//    }
 
-
-
-    public Contact(String ContactName,int Id,String Last,String LastDate,String NickName,String Server, String UserName) {
+    public Contact(String ContactName, int Id, String Last, String LastDate, String NickName, String Server, String UserName) {
         this.id = Id;
         this.contactName = ContactName;
         this.userName = UserName;
@@ -100,17 +92,15 @@ public class Contact {
     }
 
 
-
-    public Contact( String ContactName, String NickName, String Server){
+    public Contact(String ContactName, String NickName, String Server) {
 
         this.contactName = ContactName;
-        this.nickName =NickName;
-        this.server =Server;
+        this.nickName = NickName;
+        this.server = Server;
     }
 
-public  Contact(){}
-
-
+    public Contact() {
+    }
 
 
 }

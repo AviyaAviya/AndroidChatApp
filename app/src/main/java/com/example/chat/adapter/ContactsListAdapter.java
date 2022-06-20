@@ -21,25 +21,20 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
 
 
         ListenerOnClick listenerOnClick;
-       // private final ImageView imageOfContact;
 
 
-
-        private ContactViewHolder( View itemView, ListenerOnClick listenerOnClick) {
+        private ContactViewHolder(View itemView, ListenerOnClick listenerOnClick) {
             super(itemView);
             nickname_of_contact = itemView.findViewById(R.id.nickname_of_contact);
 
             this.listenerOnClick = listenerOnClick;
-        itemView.setOnClickListener(this);
+            itemView.setOnClickListener(this);
 
-            //   imageOfContact = itemView.findViewById(R.id.imageOfContact);
         }
 
         @Override
         public void onClick(View v) {
-            listenerOnClick.onItemClick(v,getAdapterPosition());
-//            if (listenerOnClick != null)
-//                listenerOnClick.onItemClick(v, getAdapterPosition());
+            listenerOnClick.onItemClick(v, getAdapterPosition());
         }
     }
 
@@ -65,7 +60,6 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
             holder.nickname_of_contact.setText(current.getNickName());
 
 
-//            holder.imageOfContact.setImageResource(current.getPic());
         }
     }
 

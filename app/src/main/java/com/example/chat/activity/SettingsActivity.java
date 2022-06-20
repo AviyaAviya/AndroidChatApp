@@ -2,8 +2,6 @@ package com.example.chat.activity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,9 +30,9 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-if(key.equals("color")){
-    this.recreate();
-}
+        if (key.equals("color")) {
+            this.recreate();
+        }
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat {
@@ -43,12 +41,13 @@ if(key.equals("color")){
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
         }
     }
-    private void setThemeOfApp(){
+
+    //color of app
+    private void setThemeOfApp() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        if(sharedPreferences.getString("color","TEAL").equals("TEAL")){
+        if (sharedPreferences.getString("color", "TEAL").equals("TEAL")) {
             setTheme(R.style.teal);
-        }
-        else {
+        } else {
             setTheme(R.style.turqiz);
         }
     }

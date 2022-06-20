@@ -31,10 +31,9 @@ public class LogInActivity extends AppCompatActivity {
         Button btnLogin = findViewById(R.id.buttonLogIn);
 
 
-
-            //taking input
-            TextView usernameTV = findViewById(R.id.userNameLogIn);
-            TextView passwordTV = findViewById(R.id.passwordLogIn);
+        //taking input
+        TextView usernameTV = findViewById(R.id.userNameLogIn);
+        TextView passwordTV = findViewById(R.id.passwordLogIn);
         btnLogin.setOnClickListener(v -> {
 
             //need to save user
@@ -43,18 +42,7 @@ public class LogInActivity extends AppCompatActivity {
             UsersAPI userApi1 = new UsersAPI();
 //send the user info(name and password)
             userApi1.sighin(login, this);
-    });
-
-//                }
-//                else{
-//                    passwordTV.setError("nop,that's not it");
-//                }
-//
-//
-//            }
-//            else{
-//                usernameTV.setError("are you invisible? we cant see you in our app ");
-//            }
+        });
 
 
         //to the log cat print where am i
@@ -77,7 +65,6 @@ public class LogInActivity extends AppCompatActivity {
 
 
     }
-
 
 
     private void setThemeOfApp() {

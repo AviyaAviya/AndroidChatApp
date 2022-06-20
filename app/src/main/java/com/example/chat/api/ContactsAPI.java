@@ -3,10 +3,10 @@ package com.example.chat.api;
 import com.example.chat.activity.MyApplication;
 import com.example.chat.activity.R;
 import com.example.chat.entitys.Contact;
-import com.example.chat.room.AppDB;
 import com.example.chat.room.ContactDao;
 
 import java.util.List;
+import java.util.concurrent.Executors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -15,68 +15,52 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ContactsAPI {
-    //    private MutableLiveData<List<Contact>> postListData;
     Retrofit retrofit;
     IContactsAPI webServiceAPI;
-    //the data base
-    private AppDB db;
-    //using room
-    private ContactDao contactDao;
+    ContactDao contactDao;
 
-    public ContactsAPI() {
+
+    public ContactsAPI(ContactDao dao) {
         retrofit = new Retrofit.Builder()
                 .baseUrl(MyApplication.context.getString(R.string.BaseUrl))
+                .callbackExecutor(Executors.newSingleThreadExecutor())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         webServiceAPI = retrofit.create(IContactsAPI.class);
+        contactDao = dao;
     }
 
 
-//    public void getContacts(String token) {
-//        Call<String> call = webServiceAPI.getContacts("Bearer " + token);
-//        call.enqueue(new Callback<String>() {
-//            @Override
-//            public void onResponse(Call<String> call, Response<String> response) {
-//                String contacts = response.body();
-//            }
-//
-//            @Override
-//            public void onFailure(Call<String> call, Throwable t) {}
-//        });
-//    }
-
-
     public void getContacts(String token) {
-        //db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ContactsDB").allowMainThreadQueries().fallbackToDestructiveMigration().build();
         Call<List<Contact>> call = webServiceAPI.getContacts("Bearer " + token);
         call.enqueue(new Callback<List<Contact>>() {
             @Override
             public void onResponse(Call<List<Contact>> call, Response<List<Contact>> response) {
-                List<Contact> contacts = response.body();
-                //update contactDao
-                contactDao = db.contactDao();
-                for (Contact c : contacts)
-                {
-                    contactDao.insert(c);
-                }
+//               updating room
+//                for (Contact c : response.body())
+//                {
+//                    contactDao.insert(c);
+//                }
+
             }
 
             @Override
-            public void onFailure(Call<List<Contact>> call, Throwable t) {}
+            public void onFailure(Call<List<Contact>> call, Throwable t) {
+            }
         });
     }
 
-    public void CreateContact(String token, Contact contact){
-        Call<Object> call = webServiceAPI.createContact("Bearer " + token,contact);
+    public void CreateContact(String token, Contact contact) {
+        Call<Object> call = webServiceAPI.createContact("Bearer " + token, contact);
         call.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {
-                if(response.isSuccessful()){
-                }
-                else{
+                if (response.isSuccessful()) {
+                } else {
                 }
 
             }
+
             @Override
             public void onFailure(Call<Object> call, Throwable t) {
                 int a = 1;
@@ -84,8 +68,6 @@ public class ContactsAPI {
             }
         });
     }
-
-
 
 
 }

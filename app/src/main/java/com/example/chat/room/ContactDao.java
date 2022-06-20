@@ -21,7 +21,7 @@ public interface ContactDao {
     @Query("SELECT * FROM Contact WHERE id = :id")
     Contact get(int id);
 
-    //addind new contact
+    //adding new contact
     @Insert
     void insert(Contact... Contacts);
 

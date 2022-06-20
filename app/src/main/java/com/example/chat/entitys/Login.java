@@ -2,6 +2,7 @@ package com.example.chat.entitys;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+
 @Entity
 public class Login {
 
@@ -27,7 +28,7 @@ public class Login {
     }
 
     @PrimaryKey
-        private String userId;
-        private String password;
+    private String userId;
+    private String password;
 
 }

@@ -20,7 +20,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class UsersAPI {
-    //    private MutableLiveData<List<Contact>> postListData;
     Retrofit retrofit;
     IUsersAPI webServiceAPI;
 
@@ -41,7 +40,8 @@ public class UsersAPI {
             }
 
             @Override
-            public void onFailure(Call<List<User>> call, Throwable t) {}
+            public void onFailure(Call<List<User>> call, Throwable t) {
+            }
         });
     }
 
@@ -59,51 +59,44 @@ public class UsersAPI {
             }
         });
     }
-        public void sighin(Login login, Activity activity) {
-            Call<Object> call = webServiceAPI.signin(login);
-            call.enqueue(new Callback<Object>() {
-                @Override
-                public void onResponse(Call<Object> call, Response<Object> response) {
-                    Object t = response.body();
-                    SharedPreferences prefs;
-                    SharedPreferences.Editor edit;
-                    prefs=activity.getSharedPreferences("myPrefs",Context.MODE_PRIVATE);
-                    edit=prefs.edit();
-                    String s = t.toString();
-                    s= s.substring(7,s.length()-1);
-                    String saveToken=s;
 
-                    edit.putString("token",saveToken);
-                    edit.commit();
+    public void sighin(Login login, Activity activity) {
+        Call<Object> call = webServiceAPI.signin(login);
+        call.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                Object t = response.body();
+                SharedPreferences prefs;
+                SharedPreferences.Editor edit;
+                prefs = activity.getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
+                edit = prefs.edit();
+                String s = t.toString();
+                s = s.substring(7, s.length() - 1);
+                String saveToken = s;
 
-                    Intent i = new Intent(activity, ContactActivity.class);
-                    //sending the user id to the activity
-          //          i.putExtra("idUserName",login.getUserId());
-                    activity.startActivity(i);
+                edit.putString("token", saveToken);
+                edit.commit();
 
-                    prefs=activity.getSharedPreferences("myPrefs2",Context.MODE_PRIVATE);
-                    edit=prefs.edit();
-                    edit.putString("userName", login.getUserId());
-                    edit.commit();
+                Intent i = new Intent(activity, ContactActivity.class);
+                activity.startActivity(i);
 
-//                    you need to put exstra this => login.getUserId();
-//                    String keyIdentifer  = null;
-//                    i.putExtra(userName, keyIdentifer );
-                    activity.startActivity(i);
+                prefs = activity.getSharedPreferences("myPrefs2", Context.MODE_PRIVATE);
+                edit = prefs.edit();
+                edit.putString("userName", login.getUserId());
+                edit.commit();
 
-                }
-                @Override
-                public void onFailure(Call<Object> call, Throwable t) {
-                    int a = 1;
+                activity.startActivity(i);
 
-                }
-            });
+            }
 
-        }
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+                int a = 1;
 
+            }
+        });
 
-
-
+    }
 
 
 }

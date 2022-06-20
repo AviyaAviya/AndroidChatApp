@@ -26,7 +26,6 @@ import com.google.firebase.iid.InstanceIdResult;
 import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
-    SharedPreferences sharedPreferences;
     //the data base
     private AppDB db;
     //using room
@@ -51,48 +50,40 @@ public class ChatActivity extends AppCompatActivity {
         prefs = this.getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
         String token = prefs.getString("token", "");
         //userName with pref
-        prefs=this.getSharedPreferences("myPrefs2", Context.MODE_PRIVATE);
-        String userName = prefs.getString("userName","");
-
-
+        prefs = this.getSharedPreferences("myPrefs2", Context.MODE_PRIVATE);
+        String userName = prefs.getString("userName", "");
 //        building db
         db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "MessagesDB").allowMainThreadQueries().build();
 
         messageDao = db.messageDao();
-        messageDao.nukeTable();
-        //list of contacts
+        // messageDao.nukeTable();
         RecyclerView lvMessages = findViewById(R.id.lvMessages);
-        MessageAPI m = new MessageAPI();
+        MessageAPI m = new MessageAPI(messageDao);
         Intent i = getIntent();
-        //passing data from server to messagesdao
+//taking history chat from server by id
         m.getMessages(token, i.getExtras().getString("contactID"));
-//        Message mes = new Message("ori", "string", "text", "abc", null, true);
-//        m.CreateMessage(token, "ori", mes);
+//taking history chat from room
         messages = messageDao.index();
-//messages = messageDao.index();
-//messages = new ArrayList<>();
-//messages.add(new Message("bla bla"));
 
 
-adapter = new MessagesListAdapter(this);
-         //list of contacts
+        adapter = new MessagesListAdapter(this);
         lvMessages.setAdapter(adapter);
         lvMessages.setLayoutManager(new LinearLayoutManager(this));
         adapter.setMessages(messages);
 
 
-
-
-
-
         Button btnSend = findViewById(R.id.btnSend);
+//send a message
         btnSend.setOnClickListener(v -> {
             contentOfMessage = findViewById(R.id.message_text);
             message = new Message(contentOfMessage.getText().toString());
-         //   messageDao.insert(message);
-            m.CreateMessage(token, i.getExtras().getString("contactID"),message);
+            //updating room
+            messageDao.insert(message);
+            //updating server
+            m.CreateMessage(token, i.getExtras().getString("contactID"), message);
+            //refresh
             messages.clear();
-           //update messagesdao
+            //taking chat history
             m.getMessages(token, i.getExtras().getString("contactID"));
             //refresh
             messages.addAll(messageDao.index());
@@ -109,12 +100,12 @@ adapter = new MessagesListAdapter(this);
 
 
     }
-    private void setThemeOfApp(){
+
+    private void setThemeOfApp() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        if(sharedPreferences.getString("color","TEAL").equals("TEAL")){
+        if (sharedPreferences.getString("color", "TEAL").equals("TEAL")) {
             setTheme(R.style.teal);
-        }
-        else {
+        } else {
             setTheme(R.style.turqiz);
         }
     }

@@ -14,7 +14,6 @@ public class User {
     public String server;
 
 
-
     public void setUserName(String userName) {
         this.userName = userName;
     }
