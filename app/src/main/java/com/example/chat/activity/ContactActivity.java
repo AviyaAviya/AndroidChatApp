@@ -52,7 +52,7 @@ public class ContactActivity extends AppCompatActivity implements ContactsListAd
 
 
         contactDao = db.contactDao();
-        contactDao.nukeTable();
+        //contactDao.nukeTable();
         api = new ContactsAPI(contactDao);
 
 

@@ -48,12 +48,12 @@
         android:hint="@string/repeat_password_field"
         android:textColorHint="@color/material_on_background_emphasis_high_type"
         android:typeface="monospace" />
-<!--    <pl.droidsonroids.gif.GifImageView-->
-<!--        android:layout_width="420dp"-->
-<!--        android:layout_height="320dp"-->
-<!--        android:src="@drawable/simp"-->
+    <pl.droidsonroids.gif.GifImageView
+        android:layout_width="420dp"
+        android:layout_height="320dp"
+        android:src="@drawable/simp"
 
-<!--        />-->
+        />
 
 
     <Button
